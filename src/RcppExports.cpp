@@ -14,12 +14,12 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // add_cpp
-double add_cpp(double& x, double& y);
+double add_cpp(const double& x, const double& y);
 static SEXP _pkgrcpp_add_cpp_try(SEXP xSEXP, SEXP ySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::traits::input_parameter< double& >::type x(xSEXP);
-    Rcpp::traits::input_parameter< double& >::type y(ySEXP);
+    Rcpp::traits::input_parameter< const double& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const double& >::type y(ySEXP);
     rcpp_result_gen = Rcpp::wrap(add_cpp(x, y));
     return rcpp_result_gen;
 END_RCPP_RETURN_ERROR
@@ -48,12 +48,80 @@ RcppExport SEXP _pkgrcpp_add_cpp(SEXP xSEXP, SEXP ySEXP) {
     UNPROTECT(1);
     return rcpp_result_gen;
 }
+// approx_pi
+double approx_pi(const int& N);
+static SEXP _pkgrcpp_approx_pi_try(SEXP NSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< const int& >::type N(NSEXP);
+    rcpp_result_gen = Rcpp::wrap(approx_pi(N));
+    return rcpp_result_gen;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP _pkgrcpp_approx_pi(SEXP NSEXP) {
+    SEXP rcpp_result_gen;
+    {
+        Rcpp::RNGScope rcpp_rngScope_gen;
+        rcpp_result_gen = PROTECT(_pkgrcpp_approx_pi_try(NSEXP));
+    }
+    Rboolean rcpp_isInterrupt_gen = Rf_inherits(rcpp_result_gen, "interrupted-error");
+    if (rcpp_isInterrupt_gen) {
+        UNPROTECT(1);
+        Rf_onintr();
+    }
+    bool rcpp_isLongjump_gen = Rcpp::internal::isLongjumpSentinel(rcpp_result_gen);
+    if (rcpp_isLongjump_gen) {
+        Rcpp::internal::resumeJump(rcpp_result_gen);
+    }
+    Rboolean rcpp_isError_gen = Rf_inherits(rcpp_result_gen, "try-error");
+    if (rcpp_isError_gen) {
+        SEXP rcpp_msgSEXP_gen = Rf_asChar(rcpp_result_gen);
+        UNPROTECT(1);
+        Rf_error("%s", CHAR(rcpp_msgSEXP_gen));
+    }
+    UNPROTECT(1);
+    return rcpp_result_gen;
+}
+// approx_pi_dqrng
+double approx_pi_dqrng(const int& N);
+static SEXP _pkgrcpp_approx_pi_dqrng_try(SEXP NSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< const int& >::type N(NSEXP);
+    rcpp_result_gen = Rcpp::wrap(approx_pi_dqrng(N));
+    return rcpp_result_gen;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP _pkgrcpp_approx_pi_dqrng(SEXP NSEXP) {
+    SEXP rcpp_result_gen;
+    {
+        Rcpp::RNGScope rcpp_rngScope_gen;
+        rcpp_result_gen = PROTECT(_pkgrcpp_approx_pi_dqrng_try(NSEXP));
+    }
+    Rboolean rcpp_isInterrupt_gen = Rf_inherits(rcpp_result_gen, "interrupted-error");
+    if (rcpp_isInterrupt_gen) {
+        UNPROTECT(1);
+        Rf_onintr();
+    }
+    bool rcpp_isLongjump_gen = Rcpp::internal::isLongjumpSentinel(rcpp_result_gen);
+    if (rcpp_isLongjump_gen) {
+        Rcpp::internal::resumeJump(rcpp_result_gen);
+    }
+    Rboolean rcpp_isError_gen = Rf_inherits(rcpp_result_gen, "try-error");
+    if (rcpp_isError_gen) {
+        SEXP rcpp_msgSEXP_gen = Rf_asChar(rcpp_result_gen);
+        UNPROTECT(1);
+        Rf_error("%s", CHAR(rcpp_msgSEXP_gen));
+    }
+    UNPROTECT(1);
+    return rcpp_result_gen;
+}
 // sumC
-double sumC(NumericVector& vec);
+double sumC(const NumericVector& vec);
 static SEXP _pkgrcpp_sumC_try(SEXP vecSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::traits::input_parameter< NumericVector& >::type vec(vecSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type vec(vecSEXP);
     rcpp_result_gen = Rcpp::wrap(sumC(vec));
     return rcpp_result_gen;
 END_RCPP_RETURN_ERROR
@@ -87,8 +155,10 @@ RcppExport SEXP _pkgrcpp_sumC(SEXP vecSEXP) {
 static int _pkgrcpp_RcppExport_validate(const char* sig) { 
     static std::set<std::string> signatures;
     if (signatures.empty()) {
-        signatures.insert("double(*add_cpp)(double&,double&)");
-        signatures.insert("double(*sumC)(NumericVector&)");
+        signatures.insert("double(*add_cpp)(const double&,const double&)");
+        signatures.insert("double(*approx_pi)(const int&)");
+        signatures.insert("double(*approx_pi_dqrng)(const int&)");
+        signatures.insert("double(*sumC)(const NumericVector&)");
     }
     return signatures.find(sig) != signatures.end();
 }
@@ -96,6 +166,8 @@ static int _pkgrcpp_RcppExport_validate(const char* sig) {
 // registerCCallable (register entry points for exported C++ functions)
 RcppExport SEXP _pkgrcpp_RcppExport_registerCCallable() { 
     R_RegisterCCallable("pkgrcpp", "_pkgrcpp_add_cpp", (DL_FUNC)_pkgrcpp_add_cpp_try);
+    R_RegisterCCallable("pkgrcpp", "_pkgrcpp_approx_pi", (DL_FUNC)_pkgrcpp_approx_pi_try);
+    R_RegisterCCallable("pkgrcpp", "_pkgrcpp_approx_pi_dqrng", (DL_FUNC)_pkgrcpp_approx_pi_dqrng_try);
     R_RegisterCCallable("pkgrcpp", "_pkgrcpp_sumC", (DL_FUNC)_pkgrcpp_sumC_try);
     R_RegisterCCallable("pkgrcpp", "_pkgrcpp_RcppExport_validate", (DL_FUNC)_pkgrcpp_RcppExport_validate);
     return R_NilValue;
@@ -103,6 +175,8 @@ RcppExport SEXP _pkgrcpp_RcppExport_registerCCallable() {
 
 static const R_CallMethodDef CallEntries[] = {
     {"_pkgrcpp_add_cpp", (DL_FUNC) &_pkgrcpp_add_cpp, 2},
+    {"_pkgrcpp_approx_pi", (DL_FUNC) &_pkgrcpp_approx_pi, 1},
+    {"_pkgrcpp_approx_pi_dqrng", (DL_FUNC) &_pkgrcpp_approx_pi_dqrng, 1},
     {"_pkgrcpp_sumC", (DL_FUNC) &_pkgrcpp_sumC, 1},
     {"_pkgrcpp_RcppExport_registerCCallable", (DL_FUNC) &_pkgrcpp_RcppExport_registerCCallable, 0},
     {NULL, NULL, 0}
