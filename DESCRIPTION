@@ -13,3 +13,5 @@ LinkingTo:
     Rcpp
 Imports: 
     Rcpp
+URL: https://github.com/Shenggang/pkgrcpp
+BugReports: https://github.com/Shenggang/pkgrcpp/issues
