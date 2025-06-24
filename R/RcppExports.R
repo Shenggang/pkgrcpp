@@ -5,3 +5,7 @@ add_cpp <- function(x, y) {
     .Call('_pkgrcpp_add_cpp', PACKAGE = 'pkgrcpp', x, y)
 }
 
+sumC <- function(vec) {
+    .Call('_pkgrcpp_sumC', PACKAGE = 'pkgrcpp', vec)
+}
+
