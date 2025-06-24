@@ -4,11 +4,11 @@
 #' Add Two Numbers
 #'
 #' Return the sum of two numbers.
-#' @param x
-#' @param y
+#' @param x, a double number
+#' @param y, a double number
 #' @export
 add_cpp <- function(x, y) {
-    .Call('_pkgrcpp_add_cpp', PACKAGE = 'pkgrcpp', x, y)
+    .Call(`_pkgrcpp_add_cpp`, x, y)
 }
 
 #' Sum over a vector
@@ -17,6 +17,10 @@ add_cpp <- function(x, y) {
 #' @param vec, a vector of arbitrary length.
 #' @export
 sumC <- function(vec) {
-    .Call('_pkgrcpp_sumC', PACKAGE = 'pkgrcpp', vec)
+    .Call(`_pkgrcpp_sumC`, vec)
 }
 
+# Register entry points for exported C++ functions
+methods::setLoadAction(function(ns) {
+    .Call(`_pkgrcpp_RcppExport_registerCCallable`)
+})
